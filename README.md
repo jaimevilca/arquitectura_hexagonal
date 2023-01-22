@@ -26,10 +26,8 @@ http://localhost:8080/api-docs.yaml
 http://localhost:8080/swagger-ui.html
 ```
 
-## Author
+## Authors
 
-👤 **Álvaro Martín Martín**
+### 👤 **Jaime Vilca** (https://github.com/jaimevilca)
+### 👤 **Jordy Piedra**  (https://github.com/JordyPiedra)
 
-* Github: [@amartinm82](https://github.com/amartinm82)
-
-Note that you should have to [install JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html), [Maven](https://maven.apache.org/install.html) and [Docker](https://docs.docker.com/engine/install/) as prerequisite.
