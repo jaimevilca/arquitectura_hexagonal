@@ -3,60 +3,60 @@ package es.codeurjc.books.services.impl;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import es.codeurjc.books.domain.port.FullProductDto;
+import es.codeurjc.books.domain.port.ProductUseCase;
 import es.codeurjc.books.dtos.requests.UpdateProductQuantityRequestDto;
-import es.codeurjc.books.dtos.responses.UserResponseDto;
 import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
 
 import es.codeurjc.books.dtos.requests.ProductRequestDto;
 import es.codeurjc.books.dtos.responses.ProductResponseDto;
 import es.codeurjc.books.exceptions.ProductNotFoundException;
-import es.codeurjc.books.models.Product;
-import es.codeurjc.books.repositories.ProductRepository;
+import es.codeurjc.books.infraestructure.repositories.ProductJpaRepository;
 import es.codeurjc.books.services.ProductService;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private Mapper mapper;
-    private ProductRepository bookRepository;
+    private ProductUseCase productUseCase;
 
-    public ProductServiceImpl(Mapper mapper, ProductRepository bookRepository) {
+    public ProductServiceImpl(Mapper mapper, ProductUseCase productUseCase) {
         this.mapper = mapper;
-        this.bookRepository = bookRepository;
+        this.productUseCase = productUseCase;
     }
 
     public Collection<ProductResponseDto> findAll() {
-        return this.bookRepository.findAll().stream()
-                .map(book -> this.mapper.map(book, ProductResponseDto.class))
+        return this.productUseCase
+                .findAll()
+                .stream()
+                .map( product -> mapper.map(product, ProductResponseDto.class))
                 .collect(Collectors.toList());
     }
 
     public ProductResponseDto save(ProductRequestDto bookRequestDto) {
-        Product book = this.mapper.map(bookRequestDto, Product.class);
-        book = this.bookRepository.save(book);
-        return this.mapper.map(book, ProductResponseDto.class);
+        FullProductDto productDto = mapper.map(bookRequestDto, FullProductDto.class);
+        FullProductDto savedProductDto = this.productUseCase.save(productDto);
+        return this.mapper.map(savedProductDto, ProductResponseDto.class);
     }
 
-    public ProductResponseDto findById(long bookId) {
-        Product book = this.bookRepository.findById(bookId).orElseThrow(ProductNotFoundException::new);
-        return this.mapper.map(book, ProductResponseDto.class);
+    public ProductResponseDto findById(long productId) {
+        FullProductDto productDto = this.productUseCase.findById(productId).orElseThrow(ProductNotFoundException::new);
+        return this.mapper.map(productDto, ProductResponseDto.class);
     }
 
     @Override
     public ProductResponseDto update(long productId, long quantity, UpdateProductQuantityRequestDto updateProductQuantityRequestDto) {
-
-        Product product = this.bookRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
+        FullProductDto product = this.productUseCase.findById(productId).orElseThrow(ProductNotFoundException::new);
         product.setStock((int) quantity);
-        product = this.bookRepository.save(product);
-
+        product = this.productUseCase.save(product);
         return this.mapper.map(product, ProductResponseDto.class);
     }
 
     @Override
     public ProductResponseDto delete(long productId) {
-        Product product = this.bookRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
-        this.bookRepository.delete(product);
+        FullProductDto product = this.productUseCase.findById(productId).orElseThrow(ProductNotFoundException::new);
+        this.productUseCase.delete(product);
         return this.mapper.map(product, ProductResponseDto.class);
     }
 

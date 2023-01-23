@@ -5,13 +5,10 @@
       http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
     <mapping>
-        <class-a>es.codeurjc.books.models.Comment</class-a>
-        <class-b>es.codeurjc.books.dtos.responses.UserCommentResponseDto</class-b>
+        <class-a>es.codeurjc.books.infraestructure.models.ProductEntity</class-a>
+        <class-b>es.codeurjc.books.dtos.responses.ProductResponseDto</class-b>
 
-        <field>
-            <a>book.id</a>
-            <b>bookId</b>
-        </field>
+
     </mapping>
 
 </mappings>

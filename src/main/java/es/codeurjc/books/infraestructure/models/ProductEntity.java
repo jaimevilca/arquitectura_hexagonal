@@ -1,36 +1,40 @@
-package es.codeurjc.books.models;
+package es.codeurjc.books.infraestructure.models;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 
 @Entity
-@Table(name = "comments")
+@Table(name = "products")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment {
+@ToString(exclude = "comments")
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
-    private String comment;
+    private String name;
     
-    private float score;
+    private String brand;
+
+    private int stock;
     
-    @ManyToOne
-    private Product book;
-    
-    @ManyToOne
-    private User user;
+
 }

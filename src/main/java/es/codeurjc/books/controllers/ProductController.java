@@ -7,7 +7,6 @@ import javax.validation.Valid;
 import es.codeurjc.books.dtos.requests.ProductRequestDto;
 import es.codeurjc.books.dtos.requests.UpdateProductQuantityRequestDto;
 import es.codeurjc.books.dtos.responses.ProductResponseDto;
-import es.codeurjc.books.dtos.responses.UserResponseDto;
 import es.codeurjc.books.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 
