@@ -1,13 +1,22 @@
 package amartinm;
 
+import es.codeurjc.books.Application;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.modulith.docs.Documenter;
+import org.springframework.modulith.model.ApplicationModules;
 
-@SpringBootTest
 class ApplicationTests {
 
+    ApplicationModules modules = ApplicationModules.of(Application.class);
+
     @Test
-    void contextLoads() {
+    void verifiesModularStructure() {
+        modules.verify();
+    }
+
+    @Test
+    void createModuleDocumentation() {
+        new Documenter(modules).writeDocumentation();
     }
 
 }
