@@ -2,7 +2,7 @@ package es.codeurjc.books.infraestructure;
 
 import es.codeurjc.books.domain.port.FullProductDto;
 import es.codeurjc.books.domain.port.ProductDto;
-import es.codeurjc.books.domain.port.ProductRepositoty;
+import es.codeurjc.books.domain.port.ProductRepository;
 import es.codeurjc.books.infraestructure.models.ProductEntity;
 import es.codeurjc.books.infraestructure.repositories.ProductJpaRepository;
 import org.dozer.Mapper;
@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class ProductRepositoryAdapter implements ProductRepositoty {
+public class ProductRepositoryAdapter implements ProductRepository {
 
     private final Mapper mapper;
     private final ProductJpaRepository productJpaRepository;

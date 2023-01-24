@@ -1,17 +1,17 @@
 package es.codeurjc.books;
 
-import java.util.Arrays;
-
-import es.codeurjc.books.domain.port.ProductRepositoty;
-import es.codeurjc.books.domain.port.ProductUseCase;
-import es.codeurjc.books.domain.port.ProductUseCaseImpl;
+import es.codeurjc.books.domain.port.*;
 import es.codeurjc.books.infraestructure.ProductRepositoryAdapter;
+import es.codeurjc.books.infraestructure.ShoppingCartRepositoryAdapter;
 import es.codeurjc.books.infraestructure.repositories.ProductJpaRepository;
+import es.codeurjc.books.infraestructure.repositories.ShoppingCartJpaRepository;
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class Application {
@@ -26,13 +26,23 @@ public class Application {
     }
 
     @Bean
-    public ProductUseCase productUseCase(ProductRepositoty productRepositoty){
-        return new ProductUseCaseImpl(productRepositoty);
+    public ProductUseCase productUseCase(ProductRepository productRepository) {
+        return new ProductUseCaseImpl(productRepository);
     }
 
     @Bean
-    public ProductRepositoty productRepositoty(ProductJpaRepository productJpaRepository, Mapper mapper){
+    public ProductRepository productRepository(ProductJpaRepository productJpaRepository, Mapper mapper) {
         return new ProductRepositoryAdapter(productJpaRepository, mapper);
+    }
+
+    @Bean
+    public CartUseCase cartUseCase(ShoppingCartRepository shoppingCartRepository) {
+        return new CartUseCaseImpl(shoppingCartRepository);
+    }
+
+    @Bean
+    public ShoppingCartRepository shoppingCartRepository(ShoppingCartJpaRepository shoppingCartJpaRepository, Mapper mapper) {
+        return new ShoppingCartRepositoryAdapter(mapper, shoppingCartJpaRepository);
     }
 
 }
